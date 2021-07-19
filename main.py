@@ -1,3 +1,11 @@
+'''
+Author: hezhaojiang
+Date: 2021-07-19 10:21:12
+LastEditTime: 2021-07-19 11:51:00
+LastEditors: Please set LastEditors
+Description: In User Settings Edit
+FilePath: \GetAudioMessages\main.py
+'''
 # -*- coding: utf-8 -*-
 
 import os
@@ -37,22 +45,24 @@ def main():
     """
     print('程序版本号：{}'.format(VERSION))
     adb.select_device()
-    dirname = os.path.join(os.getcwd(), time.strftime("adbname-%Y%m%d%H%M%S" ,  time.localtime()))
+    dirname = adb.adb_device + time.strftime("_%Y%m%d%H%M%S",  time.localtime())
+    dirname = os.path.join(os.getcwd(), dirname)
     ## dirname = os.path.join(os.getcwd(), 'test')
     dirname_log = os.path.join(dirname, 'log')
     if not os.path.exists(dirname_log):
         os.makedirs(dirname_log)
 
     ## 获取文件
-    adb.run('pull /data/log/ ' + dirname_log)
-    adb.run('pull /var/log/messages ' + os.path.join(dirname, 'messages.-1'))
+    adb.run('pull /data/log/ ' + dirname)
+    adb.run('pull /var/log/messages ' + os.path.join(dirname_log, 'messages.-1'))
 
     ## 解压文件
     files = os.listdir(dirname_log)
     for file in files:
         if 0 != file.find("messages"):
             os.remove(os.path.join(dirname_log, file))
-        gunzip(os.path.join(dirname_log, file))
+        else:
+            gunzip(os.path.join(dirname_log, file))
 
     ## 排序 & 合并文件
     files = os.listdir(dirname_log)

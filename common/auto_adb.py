@@ -1,5 +1,14 @@
+'''
+Author: hezhaojiang
+Date: 2021-07-19 10:21:12
+LastEditTime: 2021-07-19 11:53:43
+LastEditors: Please set LastEditors
+Description: In User Settings Edit
+FilePath: \GetAudioMessages\common\auto_adb.py
+'''
 # -*- coding: utf-8 -*-
 import os
+import re
 import subprocess
 import platform
 
@@ -27,7 +36,7 @@ class auto_adb():
                 except OSError:
                     pass
             print('请安装 ADB 及驱动并配置环境变量')
-            print('具体链接: https://github.com/wangshub/wechat_jump_game/wiki')
+            print('参考链接: https://www.xda-developers.com/install-adb-windows-macos-linux/')
             exit(1)
 
     def select_device(self):
@@ -43,15 +52,18 @@ class auto_adb():
             for each in output:
                 print(each.decode('utf8'))
             exit(1)
-        for i, each in output:
-            if i != 0:
-                print("%d. %s", i, each.decode('utf8'))
-        str = raw_input("请输入序号选择设备: ")
-        if str.isdigit():
-            self.adb_device = device_info[i].partition(" ")[0]
-        else:
-           print("输入错误")
-           exit(1)
+        index = 0
+        for each in device_info:
+            if index != 0 and device_info[index] != "":
+                print("{}.  {}".format(index, device_info[index]))
+            index = index + 1
+        while 1:
+            try:
+                index = int(input("请输入序号选择设备: "))
+                self.adb_device = device_info[index].split('\t')[0]
+                return
+            except:
+                pass
 
     def run(self, raw_command):
         command = '{} -s {} {}'.format(self.adb_path, self.adb_device, raw_command)
