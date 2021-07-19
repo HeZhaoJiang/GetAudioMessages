@@ -1,7 +1,7 @@
 '''
 Author: hezhaojiang
 Date: 2021-07-19 10:21:12
-LastEditTime: 2021-07-19 11:51:00
+LastEditTime: 2021-07-19 17:07:51
 LastEditors: Please set LastEditors
 Description: In User Settings Edit
 FilePath: \GetAudioMessages\main.py
@@ -37,7 +37,7 @@ def gunzip(file_name):
     os.remove(file_name)
 
 def cat(file_src, file_dst):
-    open(file_dst, 'a+').write(open(file_src).read());
+    open(file_dst, 'ab+').write(open(file_src, 'rb').read())
 
 def main():
     """
@@ -46,6 +46,7 @@ def main():
     print('程序版本号：{}'.format(VERSION))
     adb.select_device()
     dirname = adb.adb_device + time.strftime("_%Y%m%d%H%M%S",  time.localtime())
+    print('日志输出到文件夹： {}'.format(dirname))
     dirname = os.path.join(os.getcwd(), dirname)
     ## dirname = os.path.join(os.getcwd(), 'test')
     dirname_log = os.path.join(dirname, 'log')
