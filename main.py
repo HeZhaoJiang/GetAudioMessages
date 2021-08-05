@@ -1,7 +1,7 @@
 '''
 Author: hezhaojiang
 Date: 2021-07-19 10:21:12
-LastEditTime: 2021-07-19 17:07:51
+LastEditTime: 2021-08-05 10:53:25
 LastEditors: Please set LastEditors
 Description: In User Settings Edit
 FilePath: \GetAudioMessages\main.py
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     try:
         main()
         print('\n谢谢使用')
-        print('\nPlease Report Bugs to hezhaojiang@xiaomi.com.')
+        print('\nPlease Report Bugs to hezhaojiang2012@foxmail.com.')
     except KeyboardInterrupt:
         print('\n谢谢使用')
         exit(0)
