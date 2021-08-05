@@ -12,6 +12,7 @@ import os
 import sys
 import time
 import gzip
+import platform
 
 if sys.version_info.major != 3:
     print('请使用Python3')
@@ -47,11 +48,13 @@ def main():
     adb.select_device()
     dirname = adb.adb_device + time.strftime("_%Y%m%d%H%M%S",  time.localtime())
     print('日志输出到文件夹： {}'.format(dirname))
-    dirname = os.path.join(os.getcwd(), dirname)
+    if platform.system() == 'Windows':
+        dirname = os.path.join(os.getcwd(), dirname)
     ## dirname = os.path.join(os.getcwd(), 'test')
     dirname_log = os.path.join(dirname, 'log')
     if not os.path.exists(dirname_log):
         os.makedirs(dirname_log)
+    print(dirname)
 
     ## 获取文件
     adb.run('pull /data/log/ ' + dirname)
