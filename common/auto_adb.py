@@ -1,19 +1,13 @@
-'''
-Author: hezhaojiang
-Date: 2021-07-19 10:21:12
-LastEditTime: 2021-07-19 11:53:43
-LastEditors: Please set LastEditors
-Description: In User Settings Edit
-FilePath: \GetAudioMessages\common\auto_adb.py
-'''
 # -*- coding: utf-8 -*-
+
+from __future__ import print_function
 import os
 import re
 import subprocess
 import platform
 
 
-class auto_adb():
+class auto_adb(object):
     def __init__(self):
         try:
             adb_path = 'adb'
@@ -45,7 +39,10 @@ class auto_adb():
         process = subprocess.Popen(command_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output = process.communicate()
         info = output[0].decode('utf8')
-        device_info = info.split('\r\n')
+        if platform.system() == 'Windows':
+            device_info = info.split('\r\n')
+        else:
+            device_info = info.split('\n')
         if device_info[1] == '':
             print('未找到设备')
             print('adb 输出:')

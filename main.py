@@ -1,27 +1,19 @@
-'''
-Author: hezhaojiang
-Date: 2021-07-19 10:21:12
-LastEditTime: 2021-08-05 10:53:25
-LastEditors: Please set LastEditors
-Description: In User Settings Edit
-FilePath: \GetAudioMessages\main.py
-'''
+
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
 import os
 import sys
 import time
 import gzip
 import platform
 
-if sys.version_info.major != 3:
-    print('请使用Python3')
-    exit(1)
+
 try:
     from common.auto_adb import auto_adb
 except Exception as ex:
     print(ex)
-    print('请将脚本放在项目根目录中运行')
+    print(u'请将脚本放在项目根目录中运行')
     print('请检查项目根目录中的 common 文件夹是否存在')
     exit(1)
 adb = auto_adb()
